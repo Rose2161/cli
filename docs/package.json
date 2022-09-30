@@ -7,12 +7,10 @@
     "lint": "eslint \"**/*.js\"",
     "postlint": "template-oss-check",
     "template-oss-apply": "template-oss-apply --force",
-    "lintfix": "npm run lint -- --fix",
-    "preversion": "npm test",
-    "postversion": "git push origin --follow-tags",
+    "lintfix": "node .. run lint -- --fix",
     "snap": "tap",
     "test": "tap",
-    "posttest": "npm run lint"
+    "posttest": "node .. run lint"
   },
   "repository": {
     "type": "git",
@@ -21,10 +19,10 @@
   },
   "devDependencies": {
     "@mdx-js/mdx": "^1.6.22",
-    "@npmcli/eslint-config": "^3.0.1",
+    "@npmcli/eslint-config": "^3.1.0",
     "@npmcli/fs": "^2.1.0",
     "@npmcli/promise-spawn": "^3.0.0",
-    "@npmcli/template-oss": "3.5.0",
+    "@npmcli/template-oss": "4.4.1",
     "cmark-gfm": "^0.9.0",
     "jsdom": "^18.1.0",
     "marked-man": "^0.7.0",
@@ -41,25 +39,32 @@
     "nav.yml"
   ],
   "engines": {
-    "node": ">=16.0.0"
+    "node": "^14.17.0 || ^16.13.0 || >=18.0.0"
   },
   "tap": {
     "statements": 81,
     "branches": 72,
     "functions": 75,
-    "lines": 81
+    "lines": 81,
+    "timeout": 600,
+    "nyc-arg": [
+      "--exclude",
+      "tap-snapshots/**"
+    ]
   },
   "templateOSS": {
     "//@npmcli/template-oss": "This file is partially managed by @npmcli/template-oss. Edits may be overwritten.",
     "distPaths": [
-      "bin/",
-      "lib/",
       "content/",
       "nav.yml"
     ],
-    "ciVersions": [
-      "16"
+    "allowPaths": [
+      "/content/",
+      "/nav.yml"
     ],
-    "version": "3.5.0"
+    "ciVersions": "latest",
+    "engines": "^14.17.0 || ^16.13.0 || >=18.0.0",
+    "version": "4.4.1",
+    "content": "../scripts/template-oss/index.js"
   }
 }

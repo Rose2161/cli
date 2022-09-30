@@ -67,7 +67,7 @@ $ npm ci
 added 154 packages in 5s
 ```
 
-Configure Travis to build using `npm ci` instead of `npm install`:
+Configure Travis CI to build using `npm ci` instead of `npm install`:
 
 ```bash
 # .travis.yml
@@ -361,7 +361,7 @@ This value is not exported to the environment for child processes.
 
 #### `install-links`
 
-* Default: false
+* Default: true
 * Type: Boolean
 
 When set file: protocol dependencies that exist outside of the project root

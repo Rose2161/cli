@@ -2,7 +2,6 @@
 SHELL = bash
 
 PUBLISHTAG = $(shell node scripts/publish-tag.js)
-BRANCH = $(shell git rev-parse --abbrev-ref HEAD)
 
 # these docs have the @VERSION@ tag in them, so they have to be rebuilt
 # whenever the package.json is touched, in case the version changed.
@@ -92,6 +91,9 @@ freshdocs:
 	make docs
 	make mddocs
 
+lint-all: deps
+	node bin/npm-cli.js run lint-all
+
 test-all: deps
 	node bin/npm-cli.js run test-all
 
@@ -111,12 +113,10 @@ prune: deps
 	node bin/npm-cli.js prune --omit=dev --no-save --no-audit --no-fund
 	node scripts/git-dirty.js
 
-publish: gitclean ls-ok link test-all docs prune
-	git push origin $(BRANCH) &&\
-	git push origin --tags &&\
+publish: gitclean ls-ok link docs lint-all test-all prune
 	node bin/npm-cli.js publish --tag=$(PUBLISHTAG)
 
 release: gitclean ls-ok docs prune
 	@bash scripts/release.sh
 
-.PHONY: all latest install dev link docs mddocs clean uninstall test-all man docsclean release ls-ok deps prune freshdocs
+.PHONY: all latest install dev link docs mddocs clean uninstall lint-all test-all man docsclean release ls-ok deps prune freshdocs

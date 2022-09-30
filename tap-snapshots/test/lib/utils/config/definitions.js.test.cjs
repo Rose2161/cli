@@ -116,6 +116,7 @@ Array [
   "read-only",
   "rebuild-bundle",
   "registry",
+  "replace-registry-host",
   "save",
   "save-bundle",
   "save-dev",
@@ -134,8 +135,6 @@ Array [
   "shrinkwrap",
   "sign-git-commit",
   "sign-git-tag",
-  "sso-poll-frequency",
-  "sso-type",
   "strict-peer-deps",
   "strict-ssl",
   "tag",
@@ -181,19 +180,19 @@ safer to use a registry-provided authentication bearer token stored in the
 exports[`test/lib/utils/config/definitions.js TAP > config description for access 1`] = `
 #### \`access\`
 
-* Default: 'restricted' for scoped packages, 'public' for unscoped packages
+* Default: 'public' for new packages, existing packages it will not change the
+  current level
 * Type: null, "restricted", or "public"
 
-When publishing scoped packages, the access level defaults to \`restricted\`.
-If you want your scoped package to be publicly viewable (and installable)
-set \`--access=public\`. The only valid values for \`access\` are \`public\` and
-\`restricted\`. Unscoped packages _always_ have an access level of \`public\`.
+If do not want your scoped package to be publicly viewable (and installable)
+set \`--access=restricted\`.
 
-Note: Using the \`--access\` flag on the \`npm publish\` command will only set
-the package access level on the initial publish of the package. Any
-subsequent \`npm publish\` commands using the \`--access\` flag will not have an
-effect to the access level. To make changes to the access level after the
-initial publish use \`npm access\`.
+Unscoped packages can not be set to \`restricted\`.
+
+Note: This defaults to not changing the current access level for existing
+packages. Specifying a value of \`restricted\` or \`public\` during publish will
+change the access for an existing package the same way that \`npm access set
+status\` would.
 `
 
 exports[`test/lib/utils/config/definitions.js TAP > config description for all 1`] = `
@@ -252,11 +251,8 @@ exit code.
 exports[`test/lib/utils/config/definitions.js TAP > config description for auth-type 1`] = `
 #### \`auth-type\`
 
-* Default: "legacy"
-* Type: "legacy", "web", "sso", "saml", "oauth", or "webauthn"
-
-NOTE: auth-type values "sso", "saml", "oauth", and "webauthn" will be
-removed in a future version.
+* Default: "web"
+* Type: "legacy" or "web"
 
 What authentication strategy to use with \`login\`.
 `
@@ -982,7 +978,7 @@ Alias for \`--init-version\`
 exports[`test/lib/utils/config/definitions.js TAP > config description for install-links 1`] = `
 #### \`install-links\`
 
-* Default: false
+* Default: true
 * Type: Boolean
 
 When set file: protocol dependencies that exist outside of the project root
@@ -1315,7 +1311,7 @@ exports[`test/lib/utils/config/definitions.js TAP > config description for packa
 * Default:
 * Type: String (can be set multiple times)
 
-The package to install for [\`npm exec\`](/commands/npm-exec)
+The package or packages to install for [\`npm exec\`](/commands/npm-exec)
 `
 
 exports[`test/lib/utils/config/definitions.js TAP > config description for package-lock 1`] = `
@@ -1458,6 +1454,23 @@ exports[`test/lib/utils/config/definitions.js TAP > config description for regis
 * Type: URL
 
 The base URL of the npm registry.
+`
+
+exports[`test/lib/utils/config/definitions.js TAP > config description for replace-registry-host 1`] = `
+#### \`replace-registry-host\`
+
+* Default: "npmjs"
+* Type: "npmjs", "never", "always", or String
+
+Defines behavior for replacing the registry host in a lockfile with the
+configured registry.
+
+The default behavior is to replace package dist URLs from the default
+registry (https://registry.npmjs.org) to the configured registry. If set to
+"never", then use the registry value. If set to "always", then replace the
+registry host with the configured host every time.
+
+You may also specify a bare hostname (e.g., "registry.npmjs.org").
 `
 
 exports[`test/lib/utils/config/definitions.js TAP > config description for save 1`] = `
@@ -1679,29 +1692,6 @@ Note that git requires you to have set up GPG keys in your git configs for
 this to work properly.
 `
 
-exports[`test/lib/utils/config/definitions.js TAP > config description for sso-poll-frequency 1`] = `
-#### \`sso-poll-frequency\`
-
-* Default: 500
-* Type: Number
-* DEPRECATED: The --auth-type method of SSO/SAML/OAuth will be removed in a
-  future version of npm in favor of web-based login.
-
-When used with SSO-enabled \`auth-type\`s, configures how regularly the
-registry should be polled while the user is completing authentication.
-`
-
-exports[`test/lib/utils/config/definitions.js TAP > config description for sso-type 1`] = `
-#### \`sso-type\`
-
-* Default: "oauth"
-* Type: null, "oauth", or "saml"
-* DEPRECATED: The --auth-type method of SSO/SAML/OAuth will be removed in a
-  future version of npm in favor of web-based login.
-
-If \`--auth-type=sso\`, the type of SSO type to use.
-`
-
 exports[`test/lib/utils/config/definitions.js TAP > config description for strict-peer-deps 1`] = `
 #### \`strict-peer-deps\`
 
@@ -1772,12 +1762,11 @@ exports[`test/lib/utils/config/definitions.js TAP > config description for timin
 * Default: false
 * Type: Boolean
 
-If true, writes a debug log to \`logs-dir\` and timing information to
-\`_timing.json\` in the cache, even if the command completes successfully.
-\`_timing.json\` is a newline delimited list of JSON objects.
+If true, writes timing information to a process specific json file in the
+cache or \`logs-dir\`. The file name ends with \`-timing.json\`.
 
 You can quickly view it with this [json](https://npm.im/json) command line:
-\`npm exec -- json -g < ~/.npm/_timing.json\`.
+\`cat ~/.npm/_logs/*-timing.json | npm exec -- json -g\`.
 `
 
 exports[`test/lib/utils/config/definitions.js TAP > config description for tmp 1`] = `

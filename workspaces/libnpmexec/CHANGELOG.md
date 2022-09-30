@@ -1,5 +1,93 @@
 # Changelog
 
+## [5.0.0-pre.3](https://github.com/npm/cli/compare/libnpmexec-v5.0.0-pre.2...libnpmexec-v5.0.0-pre.3) (2022-09-30)
+
+### ⚠️ BREAKING CHANGES
+
+* `npm pack` now follows a strict order of operations when applying ignore rules. If a files array is present in the package.json, then rules in .gitignore and .npmignore files from the root will be ignored.
+
+### Features
+
+* [`3ae796d`](https://github.com/npm/cli/commit/3ae796d937bd36a5b1b9fd6e9e8473b4f2ddc32d) implement new `npm-packlist` behavior (@lukekarrys)
+
+### Dependencies
+
+* [Workspace](https://github.com/npm/cli/compare/arborist-v6.0.0-pre.2...arborist-v6.0.0-pre.3): `@npmcli/arborist@6.0.0-pre.3`
+
+## [5.0.0-pre.2](https://github.com/npm/cli/compare/libnpmexec-v5.0.0-pre.1...libnpmexec-v5.0.0-pre.2) (2022-09-23)
+
+### Dependencies
+
+* [Workspace](https://github.com/npm/cli/compare/arborist-v6.0.0-pre.1...arborist-v6.0.0-pre.2): `@npmcli/arborist@6.0.0-pre.2`
+
+## [5.0.0-pre.1](https://github.com/npm/cli/compare/libnpmexec-v5.0.0-pre.0...libnpmexec-v5.0.0-pre.1) (2022-09-14)
+
+### Dependencies
+
+* [Workspace](https://github.com/npm/cli/compare/arborist-v6.0.0-pre.0...arborist-v6.0.0-pre.1): `@npmcli/arborist@6.0.0-pre.1`
+
+## [5.0.0-pre.0](https://github.com/npm/cli/compare/libnpmexec-v4.0.12...libnpmexec-v5.0.0-pre.0) (2022-09-08)
+
+### ⚠ BREAKING CHANGES
+
+* **workspaces:** all workspace packages are now compatible with the following semver range for node: `^14.17.0 || ^16.13.0 || >=18.0.0`
+
+### Features
+
+  * [`e95017a`](https://github.com/npm/cli/commit/e95017a07b041cbb3293e659dad853f76462c108) [#5485](https://github.com/npm/cli/pull/5485) feat(workspaces): update supported node engines in package.json (@lukekarrys)
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @npmcli/arborist bumped from ^5.6.1 to ^6.0.0-pre.0
+
+## [4.0.12](https://github.com/npm/cli/compare/libnpmexec-v4.0.11...libnpmexec-v4.0.12) (2022-08-31)
+
+### Dependencies
+
+  * [`1286f03`](https://github.com/npm/cli/commit/1286f03fe73dee9a447b13b662f0c5622ab6ec9e) [#5381](https://github.com/npm/cli/pull/5381) deps: `unique-filename@2.0.1`
+  * [`7fbf6f7`](https://github.com/npm/cli/commit/7fbf6f7825f76906ecdec79ab15595f9e2f7b784) [#5381](https://github.com/npm/cli/pull/5381) deps: `bin-links@3.0.3`
+  * [`8ab12dc`](https://github.com/npm/cli/commit/8ab12dc32b26db770b868cf694cedab38f4e7460) [#5323](https://github.com/npm/cli/pull/5323) deps: `@npmcli/eslint-config@3.1.0`
+* The following workspace dependencies were updated
+  * dependencies
+    * @npmcli/arborist bumped from ^5.0.0 to ^5.6.1
+
+## [4.0.11](https://github.com/npm/cli/compare/libnpmexec-v4.0.10...libnpmexec-v4.0.11) (2022-08-17)
+
+
+### Bug Fixes
+
+* don't prompt on `npm exec [directory]` ([#5298](https://github.com/npm/cli/issues/5298)) ([6eba131](https://github.com/npm/cli/commit/6eba13164d84efb34554c7dddeb2dbfed063ac0a))
+* npm exec does not use script-shell option to run commands ([#5297](https://github.com/npm/cli/issues/5297)) ([e5a9162](https://github.com/npm/cli/commit/e5a9162a9dae9471e1ea77ad38baa02bb8d9852e))
+
+## [4.0.10](https://github.com/npm/cli/compare/libnpmexec-v4.0.9...libnpmexec-v4.0.10) (2022-08-10)
+
+
+### Bug Fixes
+
+* ignore global prefix if --prefix is used ([#5291](https://github.com/npm/cli/issues/5291)) ([daaf461](https://github.com/npm/cli/commit/daaf4619c85ecf62346770735cfa8e2ddecbef8b))
+* look up local command bins from local tree ([#5273](https://github.com/npm/cli/issues/5273)) ([c992fd6](https://github.com/npm/cli/commit/c992fd6757505974dc8e92a9e2886d2233e098eb))
+* only try to run global bin if the bin name exists ([#5253](https://github.com/npm/cli/issues/5253)) ([95ae9f2](https://github.com/npm/cli/commit/95ae9f2e2555ef592777399bf8fee5206d77f41d))
+
+## [4.0.9](https://github.com/npm/cli/compare/libnpmexec-v4.0.8...libnpmexec-v4.0.9) (2022-08-03)
+
+
+### Bug Fixes
+
+* fix exec tests and  clean up workspace-location-msg ([3b30af2](https://github.com/npm/cli/commit/3b30af25e93665f5aa21897910a65d7f26bbd066))
+* properly find and run global scoped packages ([#5250](https://github.com/npm/cli/issues/5250)) ([19a8346](https://github.com/npm/cli/commit/19a834610d154f36748536b27aed13bfdb5ee748))
+* properly find locally/globally/npxCache packages ([ea44995](https://github.com/npm/cli/commit/ea449954844f21abbf984e09e421f0e03485a535))
+* use binPaths ([19f1497](https://github.com/npm/cli/commit/19f1497322411f1566885bd53e63dc39f0df27ea))
+
+
+### Dependencies
+
+* @npmcli/run-script@4.2.0 ([d0be9a2](https://github.com/npm/cli/commit/d0be9a2bb53e74b30e13751afd1f6924990c8422))
+* add @npmcli/fs@2.1.1 ([c18dbc4](https://github.com/npm/cli/commit/c18dbc4393491e02532d698351747307848d2e20))
+* add semver@7.3.7 ([cd6bafd](https://github.com/npm/cli/commit/cd6bafdfbbd7a054709c11850b58f7dbc26eb8da))
+
 ## [4.0.8](https://github.com/npm/cli/compare/libnpmexec-v4.0.7...libnpmexec-v4.0.8) (2022-06-23)
 
 
