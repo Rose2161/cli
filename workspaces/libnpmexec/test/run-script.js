@@ -1,17 +1,22 @@
 const t = require('tap')
 
-const baseOpts = {
-  args: [],
-  call: '',
-  color: false,
-  path: '',
-  runPath: '',
-  shell: process.platform === 'win32'
-    ? process.env.ComSpec || 'cmd'
-    : process.env.SHELL || 'sh',
+const mockRunScript = async (t, mocks, { level = 0 } = {}) => {
+  const runScript = t.mock('../lib/run-script.js', mocks)
+  const { Chalk } = await import('chalk')
+  return (opts) => runScript({
+    args: [],
+    call: '',
+    path: '',
+    runPath: '',
+    shell: process.platform === 'win32'
+      ? process.env.ComSpec || 'cmd'
+      : process.env.SHELL || 'sh',
+    ...opts,
+    flatOptions: { chalk: new Chalk({ level }) },
+  })
 }
 
-t.test('disable, enable log progress', t => {
+t.test('disable, enable log progress', async t => {
   t.plan(3)
 
   const path = t.testdir({
@@ -19,8 +24,8 @@ t.test('disable, enable log progress', t => {
       name: 'pkg',
     }),
   })
-  const runScript = t.mock('../lib/run-script.js', {
-    '@npmcli/ci-detect': () => false,
+  const runScript = await mockRunScript(t, {
+    'ci-info': { isCI: false },
     '@npmcli/run-script': async () => {
       t.ok('should call run-script')
     },
@@ -35,45 +40,45 @@ t.test('disable, enable log progress', t => {
     },
   })
 
-  runScript({
-    ...baseOpts,
-    path,
-  })
+  await runScript({ path })
 })
 
-t.test('no package.json', t => {
+t.test('no package.json', async t => {
   t.plan(1)
 
-  const runScript = t.mock('../lib/run-script.js', {
-    '@npmcli/ci-detect': () => false,
+  const path = t.testdir({
+    'package.json': JSON.stringify({
+      name: 'pkg',
+    }),
+  })
+  const runScript = await mockRunScript(t, {
+    'ci-info': { isCI: false },
     '@npmcli/run-script': async () => {
       t.ok('should call run-script')
     },
     '../lib/no-tty.js': () => false,
   })
 
-  runScript(baseOpts)
+  await runScript({ path })
 })
 
 t.test('colorized interactive mode msg', async t => {
   t.plan(2)
 
-  const runScript = t.mock('../lib/run-script.js', {
-    '@npmcli/ci-detect': () => false,
+  const runScript = await mockRunScript(t, {
+    'ci-info': { isCI: false },
     '@npmcli/run-script': async () => {
       t.ok('should call run-script')
     },
     '../lib/no-tty.js': () => false,
-  })
+  }, { level: 3 })
 
   const OUTPUT = []
   await runScript({
-    ...baseOpts,
     output: msg => {
       OUTPUT.push(msg)
     },
     runPath: '/foo/',
-    color: true,
   })
   t.matchSnapshot(OUTPUT.join('\n'), 'should print colorized output')
 })
@@ -81,8 +86,8 @@ t.test('colorized interactive mode msg', async t => {
 t.test('no color interactive mode msg', async t => {
   t.plan(2)
 
-  const runScript = t.mock('../lib/run-script.js', {
-    '@npmcli/ci-detect': () => false,
+  const runScript = await mockRunScript(t, {
+    'ci-info': { isCI: false },
     '@npmcli/run-script': async () => {
       t.ok('should call run-script')
     },
@@ -91,7 +96,6 @@ t.test('no color interactive mode msg', async t => {
 
   const OUTPUT = []
   await runScript({
-    ...baseOpts,
     output: msg => {
       OUTPUT.push(msg)
     },
@@ -100,25 +104,25 @@ t.test('no color interactive mode msg', async t => {
   t.matchSnapshot(OUTPUT.join('\n'), 'should print non-colorized output')
 })
 
-t.test('no tty', t => {
+t.test('no tty', async t => {
   t.plan(1)
 
-  const runScript = t.mock('../lib/run-script.js', {
-    '@npmcli/ci-detect': () => false,
+  const runScript = await mockRunScript(t, {
+    'ci-info': { isCI: false },
     '@npmcli/run-script': async () => {
       t.ok('should call run-script')
     },
     '../lib/no-tty.js': () => true,
   })
 
-  runScript(baseOpts)
+  await runScript()
 })
 
-t.test('ci env', t => {
+t.test('ci env', async t => {
   t.plan(2)
 
-  const runScript = t.mock('../lib/run-script.js', {
-    '@npmcli/ci-detect': () => true,
+  const runScript = await mockRunScript(t, {
+    'ci-info': { isCI: true },
     '@npmcli/run-script': async () => {
       throw new Error('should not call run-script')
     },
@@ -135,5 +139,5 @@ t.test('ci env', t => {
     },
   })
 
-  runScript({ ...baseOpts })
+  await runScript()
 })

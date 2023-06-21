@@ -4,7 +4,7 @@ const { resolve } = require('path')
 const { parser, arrayDelimiter } = require('@npmcli/query')
 const localeCompare = require('@isaacs/string-locale-compare')('en')
 const log = require('proc-log')
-const minimatch = require('minimatch')
+const { minimatch } = require('minimatch')
 const npa = require('npm-package-arg')
 const pacote = require('pacote')
 const semver = require('semver')
@@ -120,13 +120,13 @@ class Results {
     this.#pendingCombinator = combinators[String(this.currentAstNode)]
   }
 
-  // name selectors (i.e. #foo, #foo@1.0.0)
+  // name selectors (i.e. #foo)
   // css calls this id, we interpret it as name
   idType () {
-    const spec = npa(this.currentAstNode.value)
+    const name = this.currentAstNode.value
     const nextResults = this.initialItems.filter(node =>
-      (node.name === spec.name || node.package.name === spec.name) &&
-      (semver.satisfies(node.version, spec.fetchSpec) || !spec.rawSpec))
+      (name === node.name) || (name === node.package.name)
+    )
     this.processPendingCombinator(nextResults)
   }
 

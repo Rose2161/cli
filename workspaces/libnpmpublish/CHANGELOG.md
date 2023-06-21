@@ -1,5 +1,145 @@
 # Changelog
 
+## [7.4.0](https://github.com/npm/cli/compare/libnpmpublish-v7.3.0...libnpmpublish-v7.4.0) (2023-06-21)
+
+### Features
+
+* [`7701105`](https://github.com/npm/cli/commit/770110535c07502e30619c3def8f35a522c36427) [#6526](https://github.com/npm/cli/pull/6526) Add GitLab CI provenance (#6375) (#6526) (@wraithgar, @wlynch)
+
+### Bug Fixes
+
+* [`29622c1`](https://github.com/npm/cli/commit/29622c1349b38173924058a1fb0ede9edf8a5f6f) [#6530](https://github.com/npm/cli/pull/6530) public package check in libnpmpublish (#6530) (@bdehamer)
+
+## [7.3.0](https://github.com/npm/cli/compare/libnpmpublish-v7.2.0...libnpmpublish-v7.3.0) (2023-05-31)
+
+### Features
+
+* [`a63a6d8`](https://github.com/npm/cli/commit/a63a6d8d6fd339d504ab94c0364ce7ee3d4e3775) [#6490](https://github.com/npm/cli/pull/6490) add provenanceFile option for libnpmpublish (@bdehamer)
+
+## [7.2.0](https://github.com/npm/cli/compare/libnpmpublish-v7.1.4...libnpmpublish-v7.2.0) (2023-05-17)
+
+### Features
+
+* [`bdab631`](https://github.com/npm/cli/commit/bdab631b9847013dc4e8d4083669acf6c7bfb457) [#6428](https://github.com/npm/cli/pull/6428) expose provenance transparency url (#6428) (@JamesHenry, @wraithgar)
+
+### Bug Fixes
+
+* [`f064696`](https://github.com/npm/cli/commit/f06469607b80faf72eb897ec3e33deebc6dc10fc) [#6437](https://github.com/npm/cli/pull/6437) Update publish /w provenance to ignore pkg vis 404 (#6437) (@feelepxyz)
+
+## [7.1.4](https://github.com/npm/cli/compare/libnpmpublish-v7.1.3...libnpmpublish-v7.1.4) (2023-05-03)
+
+### Dependencies
+
+* [`abdca39`](https://github.com/npm/cli/commit/abdca39a78af416f82771bde69360c0b664ac63d) [#6416](https://github.com/npm/cli/pull/6416) `sigstore@1.4.0`
+
+## [7.1.3](https://github.com/npm/cli/compare/libnpmpublish-v7.1.2...libnpmpublish-v7.1.3) (2023-03-30)
+
+### Bug Fixes
+
+* [`3cf6f0d`](https://github.com/npm/cli/commit/3cf6f0d6fcb9a9fd069b7178a223ddd1cfaf5f2b) [#6287](https://github.com/npm/cli/pull/6287) update provenance transparency log link (#6287) (@bdehamer)
+
+## [7.1.2](https://github.com/npm/cli/compare/libnpmpublish-v7.1.1...libnpmpublish-v7.1.2) (2023-03-14)
+
+### Bug Fixes
+
+* [`4622b42`](https://github.com/npm/cli/commit/4622b425751bc6e3eebb9abfa5fc3fbf94890e34) [#6247](https://github.com/npm/cli/pull/6247) add provenance publish notice (#6247) (@bdehamer)
+* [`17adfb7`](https://github.com/npm/cli/commit/17adfb7b6c125cf033ac259936fb15bb85339aac) [#6228](https://github.com/npm/cli/pull/6228) provenance build type v2 (#6228) (@bdehamer, @feelepxyz)
+
+## [7.1.1](https://github.com/npm/cli/compare/libnpmpublish-v7.1.0...libnpmpublish-v7.1.1) (2023-03-08)
+
+### Bug Fixes
+
+* [`26cbe99`](https://github.com/npm/cli/commit/26cbe9912a1b5f6c16bbc5121435037ef691b6c3) [#6226](https://github.com/npm/cli/pull/6226) improve permission error for provenance (#6226) (@bdehamer)
+
+## [7.1.0](https://github.com/npm/cli/compare/libnpmpublish-v7.0.8...libnpmpublish-v7.1.0) (2023-02-14)
+
+### Features
+
+* [`5fc6473`](https://github.com/npm/cli/commit/5fc647316cdc07d4337cdf1b75f73a0663822c7f) add provenance attestation (@bdehamer)
+
+## [7.0.8](https://github.com/npm/cli/compare/libnpmpublish-v7.0.7...libnpmpublish-v7.0.8) (2023-02-07)
+
+### Bug Fixes
+
+* [`12ec7ee`](https://github.com/npm/cli/commit/12ec7ee1983876565445ae7967e2f14f3d95e356) remove unused package.json scripts (@lukekarrys)
+
+## [7.0.7](https://github.com/npm/cli/compare/libnpmpublish-v7.0.6...libnpmpublish-v7.0.7) (2023-02-01)
+
+### Dependencies
+
+* [`721fe3f`](https://github.com/npm/cli/commit/721fe3fac383d714aa7fd7285b4392619903b1e7) [#6118](https://github.com/npm/cli/pull/6118) `read-package-json-fast@3.0.2`
+* [`a39556f`](https://github.com/npm/cli/commit/a39556f1cff4526dcbcb7b65cdd86a1ba092e13e) `@npmcli/template-oss@4.11.3`
+
+## [7.0.6](https://github.com/npm/cli/compare/libnpmpublish-v7.0.5...libnpmpublish-v7.0.6) (2022-12-07)
+
+### Dependencies
+
+* [`0a3fe00`](https://github.com/npm/cli/commit/0a3fe000e2723ae6fdb8b1d3154fd3835057c992) [#5933](https://github.com/npm/cli/pull/5933) `minipass@4.0.0`
+* [`cf0a174`](https://github.com/npm/cli/commit/cf0a17407abc577c27420a1c8a4a0c08c7cefce9) `ssri@10.0.1`
+* [`fee9b66`](https://github.com/npm/cli/commit/fee9b6686892a1c7f976c36ddd5d89b70c416817) `npm-registry-fetch@14.0.3`
+* [`875bd56`](https://github.com/npm/cli/commit/875bd56c33ca5eef80c2a50a11808445f2a39a2a) `npm-package-arg@10.1.0`
+* [Workspace](https://github.com/npm/cli/releases/tag/libnpmpack-v5.0.6): `libnpmpack@5.0.6`
+
+## [7.0.5](https://github.com/npm/cli/compare/libnpmpublish-v7.0.4...libnpmpublish-v7.0.5) (2022-11-30)
+
+### Dependencies
+
+* [Workspace](https://github.com/npm/cli/compare/libnpmpack-v5.0.4...libnpmpack-v5.0.5): `libnpmpack@5.0.5`
+
+## [7.0.4](https://github.com/npm/cli/compare/libnpmpublish-v7.0.3...libnpmpublish-v7.0.4) (2022-11-16)
+
+### Dependencies
+
+* [Workspace](https://github.com/npm/cli/compare/libnpmpack-v5.0.3...libnpmpack-v5.0.4): `libnpmpack@5.0.4`
+
+## [7.0.3](https://github.com/npm/cli/compare/libnpmpublish-v7.0.2...libnpmpublish-v7.0.3) (2022-11-09)
+
+### Dependencies
+
+* [Workspace](https://github.com/npm/cli/compare/libnpmpack-v5.0.2...libnpmpack-v5.0.3): `libnpmpack@5.0.3`
+
+## [7.0.2](https://github.com/npm/cli/compare/libnpmpublish-v7.0.1...libnpmpublish-v7.0.2) (2022-11-02)
+
+### Dependencies
+
+* [Workspace](https://github.com/npm/cli/compare/libnpmpack-v5.0.1...libnpmpack-v5.0.2): `libnpmpack@5.0.2`
+
+## [7.0.1](https://github.com/npm/cli/compare/libnpmpublish-v7.0.0...libnpmpublish-v7.0.1) (2022-10-26)
+
+### Dependencies
+
+* [Workspace](https://github.com/npm/cli/compare/libnpmpack-v5.0.0...libnpmpack-v5.0.1): `libnpmpack@5.0.1`
+
+## [7.0.0](https://github.com/npm/cli/compare/libnpmpublish-v7.0.0-pre.4...libnpmpublish-v7.0.0) (2022-10-19)
+
+### Features
+
+* [`586e78d`](https://github.com/npm/cli/commit/586e78d59c3dad29e8e886a4764d2eb8021d11d1) empty commit to trigger all workspace releases (@lukekarrys)
+
+### Dependencies
+
+* [Workspace](https://github.com/npm/cli/compare/libnpmpack-v5.0.0-pre.4...libnpmpack-v5.0.0): `libnpmpack@5.0.0`
+
+## [7.0.0-pre.4](https://github.com/npm/cli/compare/libnpmpublish-v7.0.0-pre.3...libnpmpublish-v7.0.0-pre.4) (2022-10-19)
+
+### Dependencies
+
+* [`2008ea6`](https://github.com/npm/cli/commit/2008ea6a807acbd97912799adfe97f276202cea6) `npm-package-arg@10.0.0`, `pacote@15.0.2`
+* [`aa01072`](https://github.com/npm/cli/commit/aa010722996ef6de46e1bb937c6f8a94dc2844fa) [#5707](https://github.com/npm/cli/pull/5707) update the following dependencies
+* [Workspace](https://github.com/npm/cli/compare/libnpmpack-v5.0.0-pre.3...libnpmpack-v5.0.0-pre.4): `libnpmpack@5.0.0-pre.4`
+
+## [7.0.0-pre.3](https://github.com/npm/cli/compare/libnpmpublish-v7.0.0-pre.2...libnpmpublish-v7.0.0-pre.3) (2022-10-13)
+
+### Dependencies
+
+* [Workspace](https://github.com/npm/cli/compare/libnpmpack-v5.0.0-pre.2...libnpmpack-v5.0.0-pre.3): `libnpmpack@5.0.0-pre.3`
+
+## [7.0.0-pre.2](https://github.com/npm/cli/compare/libnpmpublish-v7.0.0-pre.1...libnpmpublish-v7.0.0-pre.2) (2022-10-05)
+
+### Dependencies
+
+* [Workspace](https://github.com/npm/cli/compare/libnpmpack-v5.0.0-pre.1...libnpmpack-v5.0.0-pre.2): `libnpmpack@5.0.0-pre.2`
+
 ## [7.0.0-pre.1](https://github.com/npm/cli/compare/libnpmpublish-v7.0.0-pre.0...libnpmpublish-v7.0.0-pre.1) (2022-09-30)
 
 ### ⚠️ BREAKING CHANGES

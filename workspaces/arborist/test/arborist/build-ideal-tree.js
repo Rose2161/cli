@@ -11,7 +11,7 @@ const Arborist = require('../..')
 const fixtures = resolve(__dirname, '../fixtures')
 // load the symbolic links that we depend on
 require(fixtures)
-const { start, stop, registry, auditResponse } = require('../fixtures/registry-mocks/server.js')
+const { start, stop, registry, auditResponse } = require('../fixtures/server.js')
 const npa = require('npm-package-arg')
 const fs = require('fs')
 const nock = require('nock')
@@ -364,7 +364,7 @@ t.test('dedupe example - deduped because preferDedupe=true', t => {
 t.test('dedupe example - nested because legacyBundling=true', t => {
   const path = resolve(fixtures, 'dedupe-tests')
   return t.resolveMatchSnapshot(printIdeal(path, {
-    legacyBundling: true,
+    installStrategy: 'nested',
     preferDedupe: true,
   }))
 })
@@ -607,7 +607,7 @@ t.test('link dep within node_modules and outside root', t => {
 })
 
 t.test('global style', t => t.resolveMatchSnapshot(printIdeal(t.testdir(), {
-  globalStyle: true,
+  installStrategy: 'shallow',
   add: ['rimraf'],
 })))
 
@@ -673,7 +673,7 @@ t.test('empty update should not trigger old lockfile', async t => {
     'package-lock.json': JSON.stringify({
       name: 'empty-update',
       version: '1.0.0',
-      lockfileVersion: 2,
+      lockfileVersion: 3,
       requires: true,
       packages: {
         '': {
@@ -867,6 +867,52 @@ t.test('workspaces', t => {
       path,
       add: [
         'workspace-b',
+      ],
+    })
+
+    // just assert that the buildIdealTree call resolves, if there's a
+    // problem here it will reject because of nock disabling requests
+    await t.resolves(tree)
+
+    t.matchSnapshot(printTree(await tree))
+  })
+
+  t.test('should allow cyclic peer dependencies between workspaces and packages from a repository', async t => {
+    generateNocks(t, {
+      foo: {
+        versions: ['1.0.0'],
+        peerDependencies: ['workspace-a'],
+      },
+    })
+    const path = t.testdir({
+      'package.json': JSON.stringify({
+        name: 'root',
+        dependencies: {
+          'workspace-a': '*',
+        },
+        workspaces: ['workspace-a'],
+      }),
+      'workspace-a': {
+        'package.json': JSON.stringify({
+          name: 'workspace-a',
+          version: '1.0.0',
+          dependencies: {
+            foo: '>=1.0.0',
+          },
+        }),
+      },
+    })
+
+    const arb = new Arborist({
+      ...OPT,
+      path,
+      workspaces: ['workspace-a'],
+    })
+
+    const tree = arb.buildIdealTree({
+      path,
+      add: [
+        'foo',
       ],
     })
 
@@ -1136,7 +1182,7 @@ t.test('resolve links in global mode', async t => {
 
 t.test('dont get confused if root matches duped metadep', async t => {
   const path = resolve(fixtures, 'test-root-matches-metadep')
-  const arb = new Arborist({ path, ...OPT })
+  const arb = new Arborist({ path, installStrategy: 'hoisted', ...OPT })
   const tree = await arb.buildIdealTree()
   t.matchSnapshot(printTree(tree))
 })

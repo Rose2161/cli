@@ -19,13 +19,15 @@ async function pack (spec = 'file:.', opts = {}) {
   // mode
   const banner = !opts.silent
 
-  if (spec.type === 'directory') {
+  const stdio = opts.foregroundScripts ? 'inherit' : 'pipe'
+
+  if (spec.type === 'directory' && !opts.ignoreScripts) {
     // prepack
     await runScript({
       ...opts,
       event: 'prepack',
       path: spec.fetchSpec,
-      stdio: 'inherit',
+      stdio,
       pkg: manifest,
       banner,
     })
@@ -46,13 +48,13 @@ async function pack (spec = 'file:.', opts = {}) {
     await writeFile(destination, tarball)
   }
 
-  if (spec.type === 'directory') {
+  if (spec.type === 'directory' && !opts.ignoreScripts) {
     // postpack
     await runScript({
       ...opts,
       event: 'postpack',
       path: spec.fetchSpec,
-      stdio: 'inherit',
+      stdio,
       pkg: manifest,
       banner,
       env: {
