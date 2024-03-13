@@ -85,7 +85,7 @@
     "libnpmfund": "^4.0.0-pre.3",
     "libnpmhook": "^9.0.0-pre.0",
     "libnpmorg": "^5.0.0-pre.0",
-    "libnpmpack": "^5.0.0-pre.1",
+    "libnpmpack": "^5.0.20",
     "libnpmpublish": "^7.0.0-pre.1",
     "libnpmsearch": "^6.0.0-pre.0",
     "libnpmteam": "^5.0.0-pre.0",
